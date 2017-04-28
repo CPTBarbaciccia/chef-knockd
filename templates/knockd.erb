@@ -1,0 +1,11 @@
+[options]
+    UseSyslog
+    logfile = <%= @logfile %>
+    interface = <%= @interface %>
+[opencloseSSH]
+    sequence = <%= @sequence %>
+    seq_timeout = <%= @seq_time %>
+    tcpflags = <%= @tcpflags %>
+    start_command = <%= @start_cmd %>
+    cmd_timeout = <%= @cmd_time %>
+    stop_command = <%= @stop_cmd %>

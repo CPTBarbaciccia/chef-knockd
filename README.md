@@ -1,2 +1,31 @@
-# knockd-chef
-Cookbook for install and configure knock server
+# chef-knockd (Pre-Alpha)
+
+Cookbook to install and configure knock-server
+
+Knock is a tool developed and maintained by Judd Vinet (https://github.com/jvinet)
+link: http://www.zeroflux.org/projects/knock
+
+
+At the moment, this cookbook only sets 'opencloseSSH' configure option
+and works only on rhel distributions.
+
+
+## Attributes
+
+```
+default['sourcesense-base']['knockd']['logfile'] = '/var/log/knockd.log'
+default['sourcesense-base']['knockd']['interface'] = 'eth0'
+default['sourcesense-base']['knockd']['sequence'] = '2222,3333,4444'
+default['sourcesense-base']['knockd']['start_cmd'] = '/sbin/iptables -I INPUT 1 -m state --state NEW,ESTABLISHED,RELATED -s %IP% -p tcp --dport ssh -j ACCEPT'
+default['sourcesense-base']['knockd']['seq_time'] = 15
+default['sourcesense-base']['knockd']['cmd_time'] = 20
+default['sourcesense-base']['knockd']['tcpflags'] = 'syn'
+default['sourcesense-base']['knockd']['stop_cmd'] = '/sbin/iptables -D INPUT -m state --state NEW,ESTABLISHED,RELATED -s %IP% -p tcp --dport ssh -j ACCEPT'
+```
+
+
+TO DO:
+[ ] Auto-identification default interface (by ohai)
+[ ] Compile knock source by chef
+[ ] Adding option and configure choice
+[ ] Complete the README.md (Documentation)
