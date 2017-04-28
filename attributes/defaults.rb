@@ -19,16 +19,22 @@
 #
 # Description:: Attributes for chef-knockd cookbook
 
-default[]
+#some base attributes
+case node['platform']
+when 'ubuntu'
+  default['knockd']['depends'] = 'libpcap-dev'
+when 'centos'
+  default['knockd']['depends'] = 'libpcap-devel'
+end
 
 # attributes for knockd
-default['knockd']['logfile'] = '/var/log/knockd.log'
-default['knockd']['interface'] = 'eth0'
-default['knockd']['sequence'] = '2222,3333,4444'
-default['knockd']['start_cmd'] = '/sbin/iptables -I INPUT 1 -m state --state NEW,ESTABLISHED,RELATED -s %IP% -p tcp --dport ssh -j ACCEPT'
-default['knockd']['seq_time'] = 15
-default['knockd']['cmd_time'] = 20
-default['knockd']['tcpflags'] = 'syn'
+default['knockd']['config']['logfile'] = '/var/log/knockd.log'
+default['knockd']['config']['interface'] = 'eth0'
+default['knockd']['config']['sequence'] = '2222,3333,4444'
+default['knockd']['config']['start_cmd'] = '/sbin/iptables -I INPUT 1 -m state --state NEW,ESTABLISHED,RELATED -s %IP% -p tcp --dport ssh -j ACCEPT'
+default['knockd']['config']['seq_time'] = 15
+default['knockd']['config']['cmd_time'] = 20
+default['knockd']['config']['tcpflags'] = 'syn'
 
 # ping here
-default['knockd']['stop_cmd'] = '/sbin/iptables -D INPUT -m state --state NEW,ESTABLISHED,RELATED -s %IP% -p tcp --dport ssh -j ACCEPT'
+default['knockd']['config']['stop_cmd'] = '/sbin/iptables -D INPUT -m state --state NEW,ESTABLISHED,RELATED -s %IP% -p tcp --dport ssh -j ACCEPT'

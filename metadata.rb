@@ -4,7 +4,7 @@ maintainer_email 'luca.capanna9@gmail.com'
 license 'gplv3'
 description 'Installs/Configures chef-knockd'
 long_description 'Installs/Configures chef-knockd'
-version '0.1.0'
+version '0.0.2'
 
 # The `issues_url` points to the location where issues for this cookbook are
 # tracked.  A `View Issues` link will be displayed on this cookbook's page when
@@ -17,3 +17,11 @@ version '0.1.0'
 # a Supermarket.
 #
 # source_url 'https://github.com/CPTBarbaciccia/chef-knockd' if respond_to?(:source_url)
+
+%w(centos).each do |os|
+  supports os
+end
+
+%w(build-essential).each do |cb|
+  depends cb
+end

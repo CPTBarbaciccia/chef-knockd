@@ -3,8 +3,12 @@
 Cookbook to install and configure knock-server
 
 Knock is a tool developed and maintained by Judd Vinet (https://github.com/jvinet)
-link: http://www.zeroflux.org/projects/knock
+  link: http://www.zeroflux.org/projects/knock
+  git:  https://github.com/jvinet/knock
 
+Dependencies:
+  - libpcap
+  - build-essential
 
 At the moment, this cookbook only sets 'opencloseSSH' configure option
 and works only on rhel distributions.

@@ -17,55 +17,30 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# foobar
-foo = 'knock-server-0.5-7.el7.centos.x86_64.rpm'
-bar = '/etc/knockd.conf'
+iugin = 'download and install knock'
+robe = default['knockd']['depends']
 
+# install dependencies
+include_recipe 'build-essential'
 
-include_recipe 'chef-knockd::knock_compile'
-
-# enable and start knockd service
-service 'knockd' do
-  action      :nothing
-  subscribes  :enable, "rpm_package[#{foo}]", :immediately
-  subscribes  :start, "template[#{bar}]", :immediately
+package robe do
+  action    :install
+  notifies  :run, "script[#{iugin}]", :immediately
 end
 
-# edit /etc/knockd.conf by template
-template bar do
-  source      'knockd.erb'
-  mode        '0600'
-  owner       'root'
-  group       'root'
-  action      :nothing
-  variables ({
-    logfile:    node['knockd']['logfile'],
-    interface:  node['knockd']['interface'],
-    sequence:   node['knockd']['sequence'],
-    start_cmd:  node['knockd']['start_cmd'],
-    stop_cmd:   node['knockd']['stop_cmd'],
-    seq_time:   node['knockd']['seq_time'],
-    cmd_time:   node['knockd']['cmd_time'],
-    tcpflags:   node['knockd']['tcpflags']
-    })
+# download and install knock
+script iugin do
+  interpreter 'bash'
+  user 'root'
+  cwd '/opt'
+  code <<-EOH
+    curl -O http://www.zeroflux.org/proj/knock/files/knock-0.7.tar.gz
+    tar -zxf knock-0.7.tar.gz
+    cd knock-0.7
+    ./configure
+    make
+    make install
+  EOH
 end
 
-# delete knock default config
-file bar do
-  action      :nothing
-end
-
-# install knock-server
-rpm_package foo do
-  source      "/opt/#{foo}"
-  action      :nothing
-  notifies    :delete, "file[#{bar}]", :before
-  notifies    :create, "template[#{bar}]", :immediately
-end
-
-# move knock rpm in opt
-cookbook_file "/opt/#{foo}" do
-  source      foo
-  action      :create_if_missing
-  notifies    :install, "rpm_package[#{foo}]", :immediately
-end
+#include_recipe 'chef-knockd::knock'
