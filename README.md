@@ -13,14 +13,14 @@ and works only on rhel distributions.
 ## Attributes
 
 ```
-default['sourcesense-base']['knockd']['logfile'] = '/var/log/knockd.log'
-default['sourcesense-base']['knockd']['interface'] = 'eth0'
-default['sourcesense-base']['knockd']['sequence'] = '2222,3333,4444'
-default['sourcesense-base']['knockd']['start_cmd'] = '/sbin/iptables -I INPUT 1 -m state --state NEW,ESTABLISHED,RELATED -s %IP% -p tcp --dport ssh -j ACCEPT'
-default['sourcesense-base']['knockd']['seq_time'] = 15
-default['sourcesense-base']['knockd']['cmd_time'] = 20
-default['sourcesense-base']['knockd']['tcpflags'] = 'syn'
-default['sourcesense-base']['knockd']['stop_cmd'] = '/sbin/iptables -D INPUT -m state --state NEW,ESTABLISHED,RELATED -s %IP% -p tcp --dport ssh -j ACCEPT'
+default['knockd']['logfile'] = '/var/log/knockd.log'
+default['knockd']['interface'] = 'eth0'
+default['knockd']['sequence'] = '2222,3333,4444'
+default['knockd']['start_cmd'] = '/sbin/iptables -I INPUT 1 -m state --state NEW,ESTABLISHED,RELATED -s %IP% -p tcp --dport ssh -j ACCEPT'
+default['knockd']['seq_time'] = 15
+default['knockd']['cmd_time'] = 20
+default['knockd']['tcpflags'] = 'syn'
+default['knockd']['stop_cmd'] = '/sbin/iptables -D INPUT -m state --state NEW,ESTABLISHED,RELATED -s %IP% -p tcp --dport ssh -j ACCEPT'
 ```
 
 
