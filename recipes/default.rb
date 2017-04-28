@@ -21,6 +21,9 @@
 foo = 'knock-server-0.5-7.el7.centos.x86_64.rpm'
 bar = '/etc/knockd.conf'
 
+
+include_recipe 'chef-knockd::knock_compile'
+
 # enable and start knockd service
 service 'knockd' do
   action      :nothing
@@ -36,24 +39,15 @@ template bar do
   group       'root'
   action      :nothing
   variables ({
-    :logfile   =>  node['sourcesense-base']['knockd']['logfile'],
-    :interface =>  node['sourcesense-base']['knockd']['interface'],
-    :sequence  =>  node['sourcesense-base']['knockd']['sequence'],
-    :start_cmd =>  node['sourcesense-base']['knockd']['start_cmd'],
-    :stop_cmd  =>  node['sourcesense-base']['knockd']['stop_cmd'],
-    :seq_time  =>  node['sourcesense-base']['knockd']['seq_time'],
-    :cmd_time  =>  node['sourcesense-base']['knockd']['cmd_time'],
-    :tcpflags  =>  node['sourcesense-base']['knockd']['tcpflags']
+    logfile:    node['knockd']['logfile'],
+    interface:  node['knockd']['interface'],
+    sequence:   node['knockd']['sequence'],
+    start_cmd:  node['knockd']['start_cmd'],
+    stop_cmd:   node['knockd']['stop_cmd'],
+    seq_time:   node['knockd']['seq_time'],
+    cmd_time:   node['knockd']['cmd_time'],
+    tcpflags:   node['knockd']['tcpflags']
     })
-end
-
-# create new /etc/knock.conf
-cookbook_file bar do
-  source      'knockd.conf'
-  mode        '0600'
-  owner       'root'
-  group       'root'
-  action      :nothing
 end
 
 # delete knock default config
