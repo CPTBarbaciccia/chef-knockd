@@ -36,14 +36,14 @@ template bar do
   group       'root'
   action      :nothing
   variables ({
-    :logfile   =>  node['sourcesense-base']['knockd']['logfile'],
-    :interface =>  node['sourcesense-base']['knockd']['interface'],
-    :sequence  =>  node['sourcesense-base']['knockd']['sequence'],
-    :start_cmd =>  node['sourcesense-base']['knockd']['start_cmd'],
-    :stop_cmd  =>  node['sourcesense-base']['knockd']['stop_cmd'],
-    :seq_time  =>  node['sourcesense-base']['knockd']['seq_time'],
-    :cmd_time  =>  node['sourcesense-base']['knockd']['cmd_time'],
-    :tcpflags  =>  node['sourcesense-base']['knockd']['tcpflags']
+    :logfile   =>  node['knockd']['logfile'],
+    :interface =>  node['knockd']['interface'],
+    :sequence  =>  node['knockd']['sequence'],
+    :start_cmd =>  node['knockd']['start_cmd'],
+    :stop_cmd  =>  node['knockd']['stop_cmd'],
+    :seq_time  =>  node['knockd']['seq_time'],
+    :cmd_time  =>  node['knockd']['cmd_time'],
+    :tcpflags  =>  node['knockd']['tcpflags']
     })
 end
 
